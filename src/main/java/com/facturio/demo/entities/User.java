@@ -23,4 +23,6 @@ public class User {
     @Enumerated(EnumType.STRING)
     private Role role;
 
+    public User(int i, String julien) {
+    }
 }
