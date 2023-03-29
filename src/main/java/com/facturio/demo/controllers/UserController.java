@@ -1,7 +1,9 @@
 package com.facturio.demo.controllers;
 
 
+import com.facturio.demo.dtos.UserDtoRequest;
 import com.facturio.demo.entities.AppUser;
+import com.facturio.demo.exceptions.UserNotFoundException;
 import com.facturio.demo.services.UserManagerResponseEntity;
 import com.facturio.demo.services.UserServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,16 +16,24 @@ public class UserController {
     @Autowired
     private UserServiceInterface service;
 
-    @PostMapping("/user")
-    public ResponseEntity<?> create(@RequestBody AppUser user) {
-        return UserManagerResponseEntity.OKResponse(200, this.service.register(user));
+    @PostMapping("/register")
+    public ResponseEntity<?> create(@RequestBody UserDtoRequest user) {
+        return UserManagerResponseEntity.OKResponse(201, this.service.register(user));
     }
 
     @GetMapping("/user/searchByname/{name}")
 
     public ResponseEntity<?> searchByName(@PathVariable(name = "name") String pattern) {
         return UserManagerResponseEntity.OKResponse(200, this.service.findUserByNameStartsWith(pattern));
+    }
+    @PostMapping("/login")
 
+    public ResponseEntity<?> login (@RequestBody UserDtoRequest user){
+        try {
+            return UserManagerResponseEntity.OKResponse(200, this.service.login(user));
+        } catch (UserNotFoundException e) {
+            return UserManagerResponseEntity.errorResponse(400, e.getMessage());
+        }
     }
 
 

@@ -3,6 +3,7 @@ package com.facturio.demo.services;
 import com.facturio.demo.dtos.UserDtoRequest;
 import com.facturio.demo.entities.AppUser;
 import com.facturio.demo.entities.enums.Role;
+import com.facturio.demo.exceptions.UserNotFoundException;
 import com.facturio.demo.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,14 +18,25 @@ public class UserServiceImpl implements UserServiceInterface  {
 
 
     @Override
-    public AppUser register (AppUser newUser) {
-        return this.userRepository.save(newUser);
+    public AppUser register (UserDtoRequest newUser) {
+        return this.userRepository.save(AppUser.builder()
+                .name(newUser.getName())
+                .password(newUser.getPassword())
+                .build());
 
     }
 
     @Override
-    public AppUser login(UserDtoRequest userDtoRequest) {
-        return null;
+    public AppUser login(UserDtoRequest userDtoRequest) throws UserNotFoundException {
+        AppUser target = this.userRepository.findUserByName(userDtoRequest.getName());
+        if (target == null){
+            throw new UserNotFoundException(userDtoRequest.getName() + "User not found");
+        }
+
+        if (target.getPassword() != userDtoRequest.getPassword()) {
+            throw new UserNotFoundException("User not found");
+        }
+        return target;
     }
 
 
@@ -43,12 +55,12 @@ public class UserServiceImpl implements UserServiceInterface  {
 
     @Override
     public List<AppUser> findUserByNameStartsWith(String pattern) {
-        return null;
+         return this.userRepository.findUserByNameStartsWith(pattern);
     }
 
     @Override
     public List<AppUser> findUserByNameContaining(String pattern) {
-
         return this.userRepository.findUserByNameStartsWith(pattern);
     }
+
 }

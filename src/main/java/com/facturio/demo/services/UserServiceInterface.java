@@ -3,13 +3,14 @@ package com.facturio.demo.services;
 import com.facturio.demo.dtos.UserDtoRequest;
 import com.facturio.demo.entities.AppUser;
 import com.facturio.demo.entities.enums.Role;
+import com.facturio.demo.exceptions.UserNotFoundException;
 
 import java.util.List;
 
 public interface UserServiceInterface {
-    public AppUser register(AppUser newUser);
+    public AppUser register(UserDtoRequest newUser);
 
-    public AppUser login(UserDtoRequest userDtoRequest);
+    public AppUser login(UserDtoRequest userDtoRequest) throws UserNotFoundException;
 
     public void setUserRole(Long id, Role status);
 
