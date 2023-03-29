@@ -21,6 +21,11 @@ public class UserController {
         return UserManagerResponseEntity.OKResponse(201, this.service.register(user));
     }
 
+    @GetMapping("/users")
+    public ResponseEntity<?> getAll(){
+        return UserManagerResponseEntity.OKResponse(200, this.service.getAll());
+    }
+
     @GetMapping("/user/searchByname/{name}")
 
     public ResponseEntity<?> searchByName(@PathVariable(name = "name") String pattern) {
