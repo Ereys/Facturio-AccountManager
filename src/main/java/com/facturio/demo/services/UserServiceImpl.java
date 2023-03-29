@@ -1,7 +1,7 @@
 package com.facturio.demo.services;
 
 import com.facturio.demo.dtos.UserDtoRequest;
-import com.facturio.demo.entities.User;
+import com.facturio.demo.entities.AppUser;
 import com.facturio.demo.entities.enums.Role;
 import com.facturio.demo.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,42 +13,42 @@ public class UserServiceImpl implements UserServiceInterface  {
 
 
     @Autowired
-    private UserRepository register;
+    private UserRepository userRepository;
 
 
     @Override
-    public User register (User newUser) {
-        return this.register.save(newUser);
+    public AppUser register (AppUser newUser) {
+        return this.userRepository.save(newUser);
 
     }
 
     @Override
-    public User login(UserDtoRequest userDtoRequest) {
+    public AppUser login(UserDtoRequest userDtoRequest) {
         return null;
     }
 
 
     @Override
     public void setUserRole(Long id, Role role) {
-        User target = this.register.findById(id).orElseThrow();
+        AppUser target = this.userRepository.findById(id).orElseThrow();
         target.setRole(role);
 
     }
 
     @Override
-    public List<User> getAll() {
+    public List<AppUser> getAll() {
 
-        return this.register.findAll();
+        return this.userRepository.findAll();
     }
 
     @Override
-    public List<User> findUserByNameStartsWith(String pattern) {
+    public List<AppUser> findUserByNameStartsWith(String pattern) {
         return null;
     }
 
     @Override
-    public List<User> findUserByNameContaining(String pattern) {
+    public List<AppUser> findUserByNameContaining(String pattern) {
 
-        return this.register.findUserByNameStartsWith(pattern);
+        return this.userRepository.findUserByNameStartsWith(pattern);
     }
 }

@@ -13,8 +13,9 @@ import lombok.*;
 @Builder
 
 
-public class User {
-    @Id @GeneratedValue (strategy = GenerationType.IDENTITY)
+public class AppUser {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
 
     private long idUser;
     private String name;
@@ -23,6 +24,6 @@ public class User {
     @Enumerated(EnumType.STRING)
     private Role role;
 
-    public User(int i, String julien) {
+    public AppUser(int idUser, String Julien) {
     }
 }

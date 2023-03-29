@@ -1,7 +1,7 @@
 package com.facturio.demo.controllers;
 
 
-import com.facturio.demo.entities.User;
+import com.facturio.demo.entities.AppUser;
 import com.facturio.demo.services.UserManagerResponseEntity;
 import com.facturio.demo.services.UserServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,13 +15,13 @@ public class UserController {
     private UserServiceInterface service;
 
     @PostMapping("/user")
-    public ResponseEntity <?> create(@RequestBody User user){
+    public ResponseEntity<?> create(@RequestBody AppUser user) {
         return UserManagerResponseEntity.OKResponse(200, this.service.register(user));
     }
 
     @GetMapping("/user/searchByname/{name}")
 
-    public ResponseEntity<?> searchByName(@PathVariable(name = "name") String pattern){
+    public ResponseEntity<?> searchByName(@PathVariable(name = "name") String pattern) {
         return UserManagerResponseEntity.OKResponse(200, this.service.findUserByNameStartsWith(pattern));
 
     }

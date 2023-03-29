@@ -1,6 +1,6 @@
 package com.facturio.demo;
 
-import com.facturio.demo.entities.User;
+import com.facturio.demo.entities.AppUser;
 import com.facturio.demo.repositories.UserRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -18,7 +18,7 @@ public class UserserviceApplication {
 	@Bean
 	CommandLineRunner start(UserRepository userRepository) {
 		return args -> {
-			userRepository.save(new User( 0, "Julien"));
+			userRepository.save(new AppUser( 0, "Julien"));
 
 
 
