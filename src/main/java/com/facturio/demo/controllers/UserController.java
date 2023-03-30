@@ -36,5 +36,15 @@ public class UserController {
         }
     }
 
+    @PutMapping("/user/{id}")
+    public ResponseEntity<?> updateUser(@PathVariable("id") Long userId, @RequestBody UserDtoRequest user) {
+        try {
+
+            return UserManagerResponseEntity.OKResponse(200, this.service.updateUser(userId, user));
+        } catch (UserNotFoundException e) {
+            return UserManagerResponseEntity.errorResponse(404, e.getMessage());
+        }
+    }
+
 
 }

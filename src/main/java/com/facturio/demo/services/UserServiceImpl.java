@@ -63,4 +63,14 @@ public class UserServiceImpl implements UserServiceInterface  {
         return this.userRepository.findUserByNameStartsWith(pattern);
     }
 
+    @Override
+    public AppUser updateUser(Long userId, UserDtoRequest userDto) throws UserNotFoundException {
+        AppUser user = userRepository.findById(userId)
+                .orElseThrow(() -> new UserNotFoundException("User not found"));
+        user.setName(userDto.getName());
+        user.setPassword(userDto.getPassword());
+        userRepository.save(user);
+        return user;
+    }
+
 }

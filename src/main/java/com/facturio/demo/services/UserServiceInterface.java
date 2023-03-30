@@ -8,6 +8,7 @@ import com.facturio.demo.exceptions.UserNotFoundException;
 import java.util.List;
 
 public interface UserServiceInterface {
+
     public AppUser register(UserDtoRequest newUser);
 
     public AppUser login(UserDtoRequest userDtoRequest) throws UserNotFoundException;
@@ -20,4 +21,5 @@ public interface UserServiceInterface {
 
 
     List<AppUser> findUserByNameContaining(String pattern);
+    AppUser updateUser(Long userId, UserDtoRequest userDto) throws UserNotFoundException;
 }
